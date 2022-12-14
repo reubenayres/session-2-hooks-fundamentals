@@ -1,18 +1,20 @@
 import { Router } from "express";
 import bodyParser from "body-parser";
-
-type Contact = {
-  fullName: string;
-  title: string;
-  organization: string;
-  phone: string;
-};
+import { Contact } from "../models/contact";
 
 export default Router()
-  .get("/", (_req, res) => {
-    res.send("contacts");
+  .get("/", async (_req, res) => {
+    const contacts = await Contact.findAll();
+    res.json(contacts);
   })
-  .post("/", bodyParser.json(), (req, res) => {
+  .post("/", bodyParser.json(), async (req, res, next) => {
     console.log("hey");
-    res.json(req.body);
+    const c = await Contact.create(req.body);
+    res.json(c);
+  })
+  .put("/:id", bodyParser.json(), async (req, res, next) => {
+    console.log("hey");
+    const c = await Contact.findByPk(req.params.id);
+    await c.update(req.body);
+    res.json(c);
   });

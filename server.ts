@@ -6,6 +6,8 @@ import contactsRouter from "./controllers/contacts";
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+const { db } = require("./db/db");
+
 app.use("/contacts", contactsRouter);
 
 app.get("/", (_req, res) => {
