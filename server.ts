@@ -3,11 +3,14 @@ dotenv.config();
 import express from "express";
 import contactsRouter from "./controllers/contacts";
 import organizationsRouter from "./controllers/organizations";
+import cors from "cors";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 const { db } = require("./db/db");
+
+app.use(cors());
 
 app.use("/contacts", contactsRouter);
 app.use("/organizations", organizationsRouter);
