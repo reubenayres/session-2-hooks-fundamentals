@@ -1,27 +1,35 @@
+import { Model } from "sequelize";
 import { db } from "../db/db";
-
+import { Organization } from "./organization";
 const { DataTypes } = require("sequelize");
-export const Contact = db.define(
-  "User",
+
+class Contact extends Model {}
+
+Contact.init(
   {
     // Model attributes are defined here
-    fullName: {
+    displayName: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    // organization,
-    // lastName: {
-    // type: DataTypes.STRING
-    // allowNull defaults to true
-    // }
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    title: {
+      type: DataTypes.STRING,
+    },
+    phone: {
+      type: DataTypes.STRING,
+    },
   },
   {
-    // Other model options go here
+    sequelize: db,
+    modelName: "Contact",
   }
 );
-console.log("hi from contact");
 
-Contact.sync().then(() => console.log("created user table (theoretically)"));
+console.log("contact");
+// Contact.sync().then(() => console.log("created user table (theoretically)"));
 
-// `sequelize.define` also returns the model
-console.log(Contact === db.models.Contact); // true
+export { Contact };
